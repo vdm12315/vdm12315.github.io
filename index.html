@@ -128,57 +128,6 @@
 
 
   
-    <article id="post-运维/kafka" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/19/%E8%BF%90%E7%BB%B4/kafka/" class="article-date">
-  <time class="dt-published" datetime="2023-02-19T12:02:45.000Z" itemprop="datePublished">2023-02-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/19/%E8%BF%90%E7%BB%B4/kafka/">kafka</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>二、忘记密码修复方式<br>如果对上述设置授权后，忘记密码了，怎么办？方法如下：</p>
-<p>进入配置文件zoo.cfg，修改配置，设置跳过Acl验证，配置如下：</p>
-<p>skipACL&#x3D;yes<br>重启zookeeper。</p>
-<p>1、addauth digest user1:123456 #先执行这个，下面那个才会生效，有密码时候，需要先输入addauth digest user1:123456命令认证后才能操作<br>2、setAcl &#x2F;  auth:user1:123456:crwad<br>3、setAcl &#x2F; world:anyone:crwad</p>
-<p>4、ls -s命令<br>[zk: 127.0.0.1:2181(CONNECTED) 22] ls -s &#x2F;<br>[a, b, c, zookeeper]<br>cZxid &#x3D; 0x0 #创建节点的事务ID<br>ctime &#x3D; Wed Dec 31 19:00:00 EST 1969 #创建节点的时间，毫秒值<br>mZxid &#x3D; 0x0 #最后更新的事务ID<br>mtime &#x3D; Wed Dec 31 19:00:00 EST 1969 #最后修改的时间，毫秒值<br>pZxid &#x3D; 0x41 #最后更新的子节点ID<br>cversion &#x3D; 6 #子节点变化号，子节点修改次数<br>dataVersion &#x3D; 0 #znode数据变化号<br>aclVersion &#x3D; 5 #权限控制版本<br>ephemeralOwner &#x3D; 0x0<br>dataLength &#x3D; 0<br>numChildren &#x3D; 4 #子节点数量<br>5、节点类型<br>    1、持久<br>    2、短暂（临时）<br>    3、有序号<br>    4、无序号<br>    create &#x2F;sanguo “lvbu”  #创建无序号永久节点<br>    get -s &#x2F;sanguo<br>    create -s &#x2F;sanguo #创建有序号永久节点</p>
-<pre><code>14集10分
-</code></pre>
-<p>######kafka<br>启动zookeeper<br>sh zookeeper-server-start.sh  ..&#x2F;config&#x2F;zookeeper.properties<br>启动kafka<br>sh kafka-server-start.sh ..&#x2F;config&#x2F;server.properties   #后台启动kafka sh kafka-server-start.sh –daemon ..&#x2F;config&#x2F;server.properties<br>创建topic<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –create –topic test<br>查看topic<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –list<br>查看分区状态，分区和副本数量<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –describe –topic test</p>
-<p>#生产者，发送消息<br>.&#x2F;kafka-console-producer.sh –bootstrap-server localhost:9092 –topic test</p>
-<p>#消费者，接收消息.#–from-beginning 从最早开始获取消息<br>.&#x2F;kafka-console-consumer.sh –bootstrap-server localhost:9092 –topic test –from-beginning</p>
-<p>#链接到zookeeper<br>.&#x2F;bin&#x2F;zookeeper-shell.sh 127.0.0.1:2181</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://vdm12315.github.io/2023/02/19/%E8%BF%90%E7%BB%B4/kafka/" data-id="clechkcsg0001z8vlgzcq0hn9" data-title="kafka" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka1/" rel="tag">kafka1</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
@@ -225,10 +174,6 @@
         
           <li>
             <a href="/2023/02/19/kafka/">kafka</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/19/%E8%BF%90%E7%BB%B4/kafka/">kafka</a>
           </li>
         
       </ul>
