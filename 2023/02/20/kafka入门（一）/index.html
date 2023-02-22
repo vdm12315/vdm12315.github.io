@@ -6,15 +6,15 @@
   
   <title>kafka入门（一） | 个人小酒馆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="什么是消息队列为什么要使用消息队列-异步解耦为什么要使用消息队列-削峰填谷什么是 Apache KafkaApache Kafka最早是有Linkedin公司开发，官网定义为一款开源的分布式流处理平台，因其具备高吞吐、可扩展、持久存储、高可用等特性，被广泛用于日志收集监控数据聚合、流式数据处理、在线分析和离线分析等大数据领域，已成为大数据生态中不可或缺的部分。 kafka具有如下特征：  消息队列">
+  <meta name="description" content="1、什么是消息队列消息队列本质上是解决异步通信问题 2、为什么要使用消息队列-异步解耦拿电商下单举例：用户下单-&gt;数据库创建订单记录-&gt;商品库存扣除记录-&gt;给用户积分-&gt;给用户发送优惠券-&gt;订单创建成功。如果是同步的流程一是耗时长，二是任何一个环节阻塞都会导致整个流程时间更长 使用MQ：用户下单-&gt;MQ-&gt;数据库创建订单记录、商品库存扣除记录、给用户积分、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kafka入门（一）">
 <meta property="og:url" content="https://vdm12315.github.io/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="个人小酒馆">
-<meta property="og:description" content="什么是消息队列为什么要使用消息队列-异步解耦为什么要使用消息队列-削峰填谷什么是 Apache KafkaApache Kafka最早是有Linkedin公司开发，官网定义为一款开源的分布式流处理平台，因其具备高吞吐、可扩展、持久存储、高可用等特性，被广泛用于日志收集监控数据聚合、流式数据处理、在线分析和离线分析等大数据领域，已成为大数据生态中不可或缺的部分。 kafka具有如下特征：  消息队列">
+<meta property="og:description" content="1、什么是消息队列消息队列本质上是解决异步通信问题 2、为什么要使用消息队列-异步解耦拿电商下单举例：用户下单-&gt;数据库创建订单记录-&gt;商品库存扣除记录-&gt;给用户积分-&gt;给用户发送优惠券-&gt;订单创建成功。如果是同步的流程一是耗时长，二是任何一个环节阻塞都会导致整个流程时间更长 使用MQ：用户下单-&gt;MQ-&gt;数据库创建订单记录、商品库存扣除记录、给用户积分、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-20T13:42:06.000Z">
-<meta property="article:modified_time" content="2023-02-20T15:10:47.596Z">
+<meta property="article:modified_time" content="2023-02-22T12:49:47.930Z">
 <meta property="article:author" content="Li">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
@@ -104,7 +104,31 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="什么是消息队列"><a href="#什么是消息队列" class="headerlink" title="什么是消息队列"></a>什么是消息队列</h2><h2 id="为什么要使用消息队列-异步解耦"><a href="#为什么要使用消息队列-异步解耦" class="headerlink" title="为什么要使用消息队列-异步解耦"></a>为什么要使用消息队列-异步解耦</h2><h2 id="为什么要使用消息队列-削峰填谷"><a href="#为什么要使用消息队列-削峰填谷" class="headerlink" title="为什么要使用消息队列-削峰填谷"></a>为什么要使用消息队列-削峰填谷</h2><h2 id="什么是-Apache-Kafka"><a href="#什么是-Apache-Kafka" class="headerlink" title="什么是 Apache Kafka"></a>什么是 Apache Kafka</h2><p>Apache Kafka最早是有Linkedin公司开发，官网定义为一款开源的分布式流处理平台，因其具备高吞吐、可扩展、持久存储、高可用等特性，被广泛用于日志收集监控数据聚合、流式数据处理、在线分析和离线分析等大数据领域，已成为大数据生态中不可或缺的部分。</p>
+        <h2 id="1、什么是消息队列"><a href="#1、什么是消息队列" class="headerlink" title="1、什么是消息队列"></a>1、什么是消息队列</h2><p><em>消息队列本质上是解决异步通信问题</em></p>
+<h2 id="2、为什么要使用消息队列-异步解耦"><a href="#2、为什么要使用消息队列-异步解耦" class="headerlink" title="2、为什么要使用消息队列-异步解耦"></a>2、为什么要使用消息队列-异步解耦</h2><p>拿电商下单举例：用户下单-&gt;数据库创建订单记录-&gt;商品库存扣除记录-&gt;给用户积分-&gt;给用户发送优惠券-&gt;订单创建成功。如果是同步的流程一是耗时长，二是任何一个环节阻塞都会导致整个流程时间更长</p>
+<p>使用MQ：用户下单-&gt;MQ-&gt;数据库创建订单记录、商品库存扣除记录、给用户积分、给用户发送优惠券。等流程全通过微服务监听MQ消息，每个服务收到用户下单的消息后分别同时执行各自的动作，各个微服务之间通过MQ的事务特性保证最终一致性。</p>
+<h2 id="3、常用MQ种类："><a href="#3、常用MQ种类：" class="headerlink" title="3、常用MQ种类："></a>3、常用MQ种类：</h2><ul>
+<li><p>Rabbit MQ：使用简单</p>
+</li>
+<li><p>Rocket MQ：阿里开源，类kafka，性能与Kafka比肩，功能上更丰富，如：顺序消息</p>
+</li>
+<li><p>Kafka：性能最快</p>
+</li>
+<li><p>Zero MQ</p>
+</li>
+</ul>
+<h5 id="有broker"><a href="#有broker" class="headerlink" title="有broker"></a>有broker</h5><ul>
+<li><p>重topic：Kafka、Rocket MQ、Active MQ</p>
+<p>整个broker依据topic来进行消息的中转，在重topic的消息队列里必然需要topic的存在</p>
+</li>
+<li><p>轻topic：Rabbit MQ</p>
+<p>topic只是一种中转模式</p>
+</li>
+</ul>
+<h6 id="无broker：在生产者和消费者之间没有broker，直接使用Socket通信"><a href="#无broker：在生产者和消费者之间没有broker，直接使用Socket通信" class="headerlink" title="无broker：在生产者和消费者之间没有broker，直接使用Socket通信"></a>无broker：在生产者和消费者之间没有broker，直接使用Socket通信</h6><ul>
+<li>Zero MQ</li>
+</ul>
+<h2 id="4、什么是-Apache-Kafka"><a href="#4、什么是-Apache-Kafka" class="headerlink" title="4、什么是 Apache Kafka"></a>4、什么是 Apache Kafka</h2><p>Apache Kafka最早是有Linkedin公司开发，一款基于zookeeper协调的开源的分布式流处理平台，因其具备高吞吐、可扩展、持久存储、高可用等特性，被广泛用于日志收集监控数据聚合、流式数据处理、在线分析和离线分析等大数据领域，已成为大数据生态中不可或缺的部分。</p>
 <p>kafka具有如下特征：</p>
 <ul>
 <li><p>消息队列，Kafka具有应用解耦、流量削峰填谷、缓冲、异步通信等消息队列功能。</p>
@@ -114,6 +138,38 @@
 <li><p>实时数据处理，Kafka提供了一些和数据处理相关的组件，比如Kafka Streams、Kafka Connect，具备了实时数据的处理功能。</p>
 </li>
 </ul>
+<h2 id="5、Kafka基本概念"><a href="#5、Kafka基本概念" class="headerlink" title="5、Kafka基本概念"></a>5、Kafka基本概念</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Broker</td>
+<td>消息中间件处理节点，一个Kafaka节点就是一个Broker，一个或多个Broker可以组成一个Kafka集群</td>
+</tr>
+<tr>
+<td>Topic</td>
+<td>Kafka根据topic对消息进行分类，发布到Kafka集群的每条消息都需要指定一个topic</td>
+</tr>
+<tr>
+<td>Producer</td>
+<td>消息生产者，向Broker发送消息的客户端，通常表现为一个应用或代码块</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td>消息消费者，从Broker读取消息的客户端，通常表现为一个应用或代码块</td>
+</tr>
+<tr>
+<td>ConsumerGroup</td>
+<td>每个Consumer属于一个特定的Consumer Group，一条消息可以被多个不同的Comsumer Group消费，但是一个Consumer Group中只能有一个Consumer能够消费该消息</td>
+</tr>
+<tr>
+<td>Partition</td>
+<td>物理上的概念，一个topic有分为多个partition，每个partition内部消息是有序的</td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -129,6 +185,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Kafaka安装（二）
+        
+      </div>
+    </a>
   
   
     <a href="/2023/02/19/kafka/" id="article-nav-older" class="article-nav-link-wrap">
@@ -190,6 +255,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/">Kafaka安装（二）</a>
+          </li>
         
           <li>
             <a href="/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">kafka入门（一）</a>
