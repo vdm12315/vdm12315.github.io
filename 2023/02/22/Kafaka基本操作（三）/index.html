@@ -6,16 +6,17 @@
   
   <title>Kafaka基本操作（三） | 微醺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="目前调试中">
+  <meta name="description" content="1、创建topic12# 创建名为test的topic，这个topic只有一个partition和一个副本.&#x2F;bin&#x2F;kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 1 --topic test  2、查看topic12# 列出所有的topic信息.&#x2F;bin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafaka基本操作（三）">
 <meta property="og:url" content="https://vdm12315.github.io/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="微醺">
-<meta property="og:description" content="目前调试中">
+<meta property="og:description" content="1、创建topic12# 创建名为test的topic，这个topic只有一个partition和一个副本.&#x2F;bin&#x2F;kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 1 --topic test  2、查看topic12# 列出所有的topic信息.&#x2F;bin">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-22T13:39:43.000Z">
-<meta property="article:modified_time" content="2023-02-22T13:40:24.042Z">
+<meta property="article:modified_time" content="2023-02-22T14:31:21.150Z">
 <meta property="article:author" content="Li">
+<meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="微醺" type="application/atom+xml">
@@ -50,7 +51,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">记录日常学习笔记，防止后续忘记</a>
+          <a href="/" id="subtitle">保持学习，不要掉队</a>
         </h2>
       
     </div>
@@ -83,6 +84,10 @@
   <time class="dt-published" datetime="2023-02-22T13:39:43.000Z" itemprop="datePublished">2023-02-22</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -99,7 +104,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1、创建topic"><a href="#1、创建topic" class="headerlink" title="1、创建topic"></a>1、创建topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建名为<span class="built_in">test</span>的topic，这个topic只有一个partition和一个副本</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 1 --topic test</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、查看topic"><a href="#2、查看topic" class="headerlink" title="2、查看topic"></a>2、查看topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有的topic信息</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h2><p>Kafka自带了一个producer命令客户端，可以从本地文件中读取内容，也可以直接以命令行的方式输入内容，并将这些内容以消息的形式发送到Kafka集群中。默认情况下，每一行会被当成一个独立的消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把消息发送给broker中的<span class="built_in">test</span> topic，分别发送abcdefg消息</span></span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">a</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">b</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">c</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">d</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">e</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">f</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">g</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、消费消息"><a href="#4、消费消息" class="headerlink" title="4、消费消息"></a>4、消费消息</h2><p>对于consumer，kafka同样也自带了一个命令行客户端，会将获取到的内容在命令中进行输出，默认是消费最新消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从Kafka服务器中指定的topic进行消费</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从最后一条消息的偏移量+1开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从头开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test</span><br></pre></td></tr></table></figure>
+
+<p>几个注意点：</p>
+<ul>
+<li><p>消息会被保存</p>
+</li>
+<li><p>消息有顺序</p>
+</li>
+</ul>
+<h2 id="5、Kafka生产的日志文件说明"><a href="#5、Kafka生产的日志文件说明" class="headerlink" title="5、Kafka生产的日志文件说明"></a>5、Kafka生产的日志文件说明</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在server.properties配置文件中以log.dirs配置为起始目录位置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入到topic名字+0的目录下，如本次创建的topic为<span class="built_in">test</span>，则进入到test-0目录</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">索引文件</span></span><br><span class="line">00000000000000000000.index</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息体文件，Kafka消息都保存在这个文件中</span></span><br><span class="line">00000000000000000000.log</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">时间索引文件</span></span><br><span class="line">00000000000000000000.timeindex</span><br><span class="line">leader-epoch-checkpoint</span><br><span class="line">partition.metadata</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
@@ -107,6 +130,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
+
     </footer>
   </div>
   

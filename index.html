@@ -48,7 +48,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">记录日常学习笔记，防止后续忘记</a>
+          <a href="/" id="subtitle">保持学习，不要掉队</a>
         </h2>
       
     </div>
@@ -83,6 +83,10 @@
   <time class="dt-published" datetime="2023-02-22T13:39:43.000Z" itemprop="datePublished">2023-02-22</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -99,7 +103,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1、创建topic"><a href="#1、创建topic" class="headerlink" title="1、创建topic"></a>1、创建topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建名为<span class="built_in">test</span>的topic，这个topic只有一个partition和一个副本</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 1 --topic test</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、查看topic"><a href="#2、查看topic" class="headerlink" title="2、查看topic"></a>2、查看topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有的topic信息</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h2><p>Kafka自带了一个producer命令客户端，可以从本地文件中读取内容，也可以直接以命令行的方式输入内容，并将这些内容以消息的形式发送到Kafka集群中。默认情况下，每一行会被当成一个独立的消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把消息发送给broker中的<span class="built_in">test</span> topic，分别发送abcdefg消息</span></span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">a</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">b</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">c</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">d</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">e</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">f</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">g</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、消费消息"><a href="#4、消费消息" class="headerlink" title="4、消费消息"></a>4、消费消息</h2><p>对于consumer，kafka同样也自带了一个命令行客户端，会将获取到的内容在命令中进行输出，默认是消费最新消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从Kafka服务器中指定的topic进行消费</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从最后一条消息的偏移量+1开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从头开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test</span><br></pre></td></tr></table></figure>
+
+<p>几个注意点：</p>
+<ul>
+<li><p>消息会被保存</p>
+</li>
+<li><p>消息有顺序</p>
+</li>
+</ul>
+<h2 id="5、Kafka生产的日志文件说明"><a href="#5、Kafka生产的日志文件说明" class="headerlink" title="5、Kafka生产的日志文件说明"></a>5、Kafka生产的日志文件说明</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在server.properties配置文件中以log.dirs配置为起始目录位置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入到topic名字+0的目录下，如本次创建的topic为<span class="built_in">test</span>，则进入到test-0目录</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">索引文件</span></span><br><span class="line">00000000000000000000.index</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息体文件，Kafka消息都保存在这个文件中</span></span><br><span class="line">00000000000000000000.log</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">时间索引文件</span></span><br><span class="line">00000000000000000000.timeindex</span><br><span class="line">leader-epoch-checkpoint</span><br><span class="line">partition.metadata</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
@@ -107,6 +129,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
+
     </footer>
   </div>
   
@@ -141,7 +165,9 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="1、Kafka下载"><a href="#1、Kafka下载" class="headerlink" title="1、Kafka下载"></a>1、Kafka下载</h2><p>Kafka<a target="_blank" rel="noopener" href="https://kafka.apache.org/downloads">Kafka下载</a></p>
+        <h2 id="1、Kafka下载"><a href="#1、Kafka下载" class="headerlink" title="1、Kafka下载"></a>1、Kafka下载</h2><p>Kafka<a target="_blank" rel="noopener" href="https://downloads.apache.org/kafka/3.4.0/kafka_2.13-3.4.0.tgz">Kafka下载</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka本版介绍，</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2.13 指的是编译Kafka源代码的Scala编译器版本号，</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3.4.0是Kafka版本，其中3是大版本，4是小版本，0表示修订版本</span></span><br><span class="line">kafka_2.13-3.4.0.tgz</span><br></pre></td></tr></table></figure>
+
 <p><em>Kafka安装依赖java环境，所以先配置java环境</em></p>
 <h2 id="2、Kafka安装"><a href="#2、Kafka安装" class="headerlink" title="2、Kafka安装"></a>2、Kafka安装</h2><ol>
 <li><p>下载安装包</p>
@@ -149,7 +175,7 @@
 <li><p>解压安装包到对应的目录</p>
 </li>
 </ol>
-<h2 id="3、Kafka文件配置文件"><a href="#3、Kafka文件配置文件" class="headerlink" title="3、Kafka文件配置文件"></a>3、Kafka文件配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">单运行时配置0即可，集群配置，每个broker.id参数值唯一</span></span><br><span class="line">broker.id=0 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka监听地址</span></span><br><span class="line">listeners=PLAINTEXT:/10.111.174.12:9092 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息保存在该日志文件路径，消息默认保存7天,正式环境不要使用tmp目录</span></span><br><span class="line">log.dirs=/tmp/kafka-logs </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka链接zookeeper地址</span></span><br><span class="line">zookeeper.connect=localhost:2181 </span><br></pre></td></tr></table></figure>
+<h2 id="3、Kafka文件配置文件"><a href="#3、Kafka文件配置文件" class="headerlink" title="3、Kafka文件配置文件"></a>3、Kafka文件配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">单运行时配置0即可，集群配置，每个broker.id参数值唯一</span></span><br><span class="line">broker.id=0 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka监听地址</span></span><br><span class="line">listeners=PLAINTEXT:/10.111.174.12:9092 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息保存在该日志文件路径，消息默认保存7天,正式环境不要使用tmp目录</span></span><br><span class="line">log.dirs=/tmp/kafka-logs </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka链接zookeeper地址</span></span><br><span class="line">zookeeper.connect=localhost:2181 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">每个日志文件的保存时间，默认数据保存时间对所有topic都一样</span></span><br><span class="line">log.retention.hours=168</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认创建topic的分区数</span></span><br><span class="line">num.partitions=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动创建topic的默认副本数量，建议设置为大于等于2</span></span><br><span class="line">default.replication.factor=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">当producer设置acks为-1时，min.insync.replicas指定replicas的最小数目</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">（必须确认每一个replica的写数据都是成功的），如果整个数目没有达到，producer</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送消息会产生异常</span></span><br><span class="line">min.insync.replicas=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否允许删除主题</span></span><br><span class="line">delete.topic.enable=false</span><br></pre></td></tr></table></figure>
 
 <h2 id="4、启动Kafka"><a href="#4、启动Kafka" class="headerlink" title="4、启动Kafka"></a>4、启动Kafka</h2><p><em>以下操作基于Kafka解压目录</em></p>
 <ul>
