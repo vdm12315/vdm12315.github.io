@@ -6,15 +6,15 @@
   
   <title>Kafaka安装（二） | 微醺</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1、Kafka下载KafkaKafka下载 Kafka安装依赖java环境，所以先配置java环境 2、Kafka安装 下载安装包  解压安装包到对应的目录   3、Kafka文件配置文件1234broker.id&#x3D;0 #单运行时配置0即可，集群配置，每个broker.id参数值唯一listeners&#x3D;PLAINTEXT:&#x2F;10.111.174.12&#x2F;:9092 #Kafka监听地址log.dir">
+  <meta name="description" content="1、Kafka下载KafkaKafka下载 Kafka安装依赖java环境，所以先配置java环境 2、Kafka安装 下载安装包  解压安装包到对应的目录   3、Kafka文件配置文件12345678# 单运行时配置0即可，集群配置，每个broker.id参数值唯一broker.id&#x3D;0 # Kafka监听地址listeners&#x3D;PLAINTEXT:&#x2F;10.111.174.12:9092 #">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafaka安装（二）">
 <meta property="og:url" content="https://vdm12315.github.io/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="微醺">
-<meta property="og:description" content="1、Kafka下载KafkaKafka下载 Kafka安装依赖java环境，所以先配置java环境 2、Kafka安装 下载安装包  解压安装包到对应的目录   3、Kafka文件配置文件1234broker.id&#x3D;0 #单运行时配置0即可，集群配置，每个broker.id参数值唯一listeners&#x3D;PLAINTEXT:&#x2F;10.111.174.12&#x2F;:9092 #Kafka监听地址log.dir">
+<meta property="og:description" content="1、Kafka下载KafkaKafka下载 Kafka安装依赖java环境，所以先配置java环境 2、Kafka安装 下载安装包  解压安装包到对应的目录   3、Kafka文件配置文件12345678# 单运行时配置0即可，集群配置，每个broker.id参数值唯一broker.id&#x3D;0 # Kafka监听地址listeners&#x3D;PLAINTEXT:&#x2F;10.111.174.12:9092 #">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-22T12:52:33.000Z">
-<meta property="article:modified_time" content="2023-02-22T13:11:17.657Z">
+<meta property="article:modified_time" content="2023-02-22T13:40:22.650Z">
 <meta property="article:author" content="Li">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
   </div>
 
   </div>
@@ -112,13 +112,15 @@
 <li><p>解压安装包到对应的目录</p>
 </li>
 </ol>
-<h2 id="3、Kafka文件配置文件"><a href="#3、Kafka文件配置文件" class="headerlink" title="3、Kafka文件配置文件"></a>3、Kafka文件配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">broker.id=0 #单运行时配置0即可，集群配置，每个broker.id参数值唯一</span><br><span class="line">listeners=PLAINTEXT:/10.111.174.12/:9092 #Kafka监听地址</span><br><span class="line">log.dirs=/tmp/kafka-logs #Kafka消息保存在该日志文件路径，消息默认保存7天</span><br><span class="line">zookeeper.connect=localhost:2181 #Kafka链接zookeeper地址</span><br></pre></td></tr></table></figure>
+<h2 id="3、Kafka文件配置文件"><a href="#3、Kafka文件配置文件" class="headerlink" title="3、Kafka文件配置文件"></a>3、Kafka文件配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">单运行时配置0即可，集群配置，每个broker.id参数值唯一</span></span><br><span class="line">broker.id=0 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka监听地址</span></span><br><span class="line">listeners=PLAINTEXT:/10.111.174.12:9092 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息保存在该日志文件路径，消息默认保存7天,正式环境不要使用tmp目录</span></span><br><span class="line">log.dirs=/tmp/kafka-logs </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka链接zookeeper地址</span></span><br><span class="line">zookeeper.connect=localhost:2181 </span><br></pre></td></tr></table></figure>
 
 <h2 id="4、启动Kafka"><a href="#4、启动Kafka" class="headerlink" title="4、启动Kafka"></a>4、启动Kafka</h2><p><em>以下操作基于Kafka解压目录</em></p>
 <ul>
 <li><p>启动</p>
-<p><code>./bin/kafka-server-start.sh -daemon ./config/server.properties #-daemon代表运行在后台</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka基于zookeeper，所以需要先启动zookeeper</span></span><br><span class="line">./bin/zookeeper-server-start.sh -daemon ./config/zookeeper.properties </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-daemon代表运行在后台</span></span><br><span class="line">./bin/kafka-server-start.sh -daemon ./config/server.properties </span><br></pre></td></tr></table></figure>
 </li>
+<li><p>登录zookeeper查看信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">登录zookeeper</span></span><br><span class="line">./bin/zookeeper-shell.sh localhost:2181 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看broker，显示0表示<span class="built_in">id</span>为0的broker已经上线</span></span><br><span class="line">ls /brokers/ids </span><br><span class="line">[0]</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -135,6 +137,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Kafaka基本操作（三）
+        
+      </div>
+    </a>
   
   
     <a href="/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
@@ -156,7 +167,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li></ul>
     </div>
   </div>
 
@@ -196,6 +207,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/">Kafaka基本操作（三）</a>
+          </li>
         
           <li>
             <a href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/">Kafaka安装（二）</a>
