@@ -138,6 +138,16 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建多分区to pic</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 2 --topic test1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有主题</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入到kafka的日志目录</span></span><br><span class="line">可以看到topic-test1有两个分区，分别是test1-0和test1-1</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p>__consumer_offsets-49：kafka内部创建了__consumer_offsets，包含50个分区。这个主题用来存放消费者的某个主题的便宜量，每个消费者会把消费的主题偏移量自主上报给kafka的默认主题。kafka为了提升整个主题的并发性，默认设置了50个分区，可以通过参数调整</p>
+</li>
+<li><p>提交到50个主题中的哪个分区，通过hash(consumerGroup)%__consumer_offers主题分区数</p>
+</li>
+<li><p>提交到该主题中的内容是：key是consumerGroupid+topic+分区号，value就是当前offset值</p>
+</li>
+<li></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
