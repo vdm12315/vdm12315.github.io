@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Kafka集群（四） | 微醺</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1、搭建Kafka集群，3个Broker准备3个server.propertis文件，每个文件中需要调整的文件如下：  server.propertis  123broker.id&#x3D;0listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;localhost:9092log.dirs&#x3D;&#x2F;tmp&#x2F;kafka-logs0   server1.propertis  123broker.id&#x3D;1listeners&#x3D;P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka集群（四）">
+<meta property="og:url" content="https://vdm12315.github.io/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:site_name" content="微醺">
+<meta property="og:description" content="1、搭建Kafka集群，3个Broker准备3个server.propertis文件，每个文件中需要调整的文件如下：  server.propertis  123broker.id&#x3D;0listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;localhost:9092log.dirs&#x3D;&#x2F;tmp&#x2F;kafka-logs0   server1.propertis  123broker.id&#x3D;1listeners&#x3D;P">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-24T13:59:23.000Z">
+<meta property="article:modified_time" content="2023-02-24T15:04:12.482Z">
+<meta property="article:author" content="Li">
+<meta property="article:tag" content="kafka">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="微醺" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">微醺</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">保持学习，不要掉队</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vdm12315.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Kafka集群（四）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-02-24T13:59:23.000Z" itemprop="datePublished">2023-02-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/kafka/">kafka</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Kafka集群（四）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1、搭建Kafka集群，3个Broker"><a href="#1、搭建Kafka集群，3个Broker" class="headerlink" title="1、搭建Kafka集群，3个Broker"></a>1、搭建Kafka集群，3个Broker</h2><p>准备3个server.propertis文件，每个文件中需要调整的文件如下：</p>
+<ul>
+<li>server.propertis</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker.id=0</span><br><span class="line">listeners=PLAINTEXT://localhost:9092</span><br><span class="line">log.dirs=/tmp/kafka-logs0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>server1.propertis</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker.id=1</span><br><span class="line">listeners=PLAINTEXT://localhost:9093</span><br><span class="line">log.dirs=/tmp/kafka-logs1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>server2.propertis</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker.id=2</span><br><span class="line">listeners=PLAINTEXT://localhost:9094</span><br><span class="line">log.dirs=/tmp/kafka-logs2</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、执行如下命令启动"><a href="#2、执行如下命令启动" class="headerlink" title="2、执行如下命令启动"></a>2、执行如下命令启动</h2><ul>
+<li>启动zookeeper</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zookeeper-server-start.sh -daemon ./config/zookeeper.properties </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动broker1</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh -daemon ./config/server.properties</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动broker2</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh -daemon ./config/server1.properties</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动broker3</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh -daemon ./config/server2.properties</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在zookeeper中查看broker是否启动成功</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">链接到zookeeper</span></span><br><span class="line">./bin/zookeeper-shell.sh localhost:2181</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前已注册的broker <span class="built_in">id</span>号</span></span><br><span class="line">ls /brokers/ids</span><br><span class="line">[0, 1, 2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、副本的概念"><a href="#3、副本的概念" class="headerlink" title="3、副本的概念"></a>3、副本的概念</h2><p>副本是对分区的备份。在集群环境中，不同的副本会被部署在不同的broker上。下面例子：创建1个主题，2个分区，3个副本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建topic</span></span><br><span class="line">./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 2 --topic mycluster</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看topic</span></span><br><span class="line">./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic mycluster</span><br><span class="line">Topic: mycluster    PartitionCount: 2    ReplicationFactor: 3    Configs: segment.bytes=1073741824</span><br><span class="line">    Topic: mycluster    Partition: 0    Leader: 1    Replicas: 1,2,0    Isr: 1,2,0</span><br><span class="line">    Topic: mycluster    Partition: 1    Leader: 0    Replicas: 0,1,2    Isr: 0,1,2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Topic：topic名字</p>
+</li>
+<li><p>Partition：分区</p>
+</li>
+<li><p>Leader：负责读和写,也就是生产者和消费者都与leader通信，同时会把数据同步到foolower。Partition: 0 Leader: 1（表示0号分区在brokerid为1的broker节点上）</p>
+</li>
+<li><p>Replicas：broker的节点数</p>
+</li>
+<li><p>Isr：可以同步和已同步的节点会被存入isr集合中。如果isr中某个节点性能过差，会被踢出Isr集合中。该字段可以判断broker节点同步是否正常</p>
+</li>
+</ul>
+<h2 id="4、集群方式查看topic和生产消费"><a href="#4、集群方式查看topic和生产消费" class="headerlink" title="4、集群方式查看topic和生产消费"></a>4、集群方式查看topic和生产消费</h2><ul>
+<li>查看topic</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动生产者</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动消费者</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E5%9B%9B%EF%BC%89/" data-id="cleinz8v30000i8vlgs16bcbf" data-title="Kafka集群（四）" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/02/23/Kafka%E6%B6%88%E6%81%AF%E7%B1%BB%E5%88%AB%EF%BC%88%E5%9B%9B%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Kafka消息类别（四）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kafka/" style="font-size: 10px;">kafka</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E5%9B%9B%EF%BC%89/">Kafka集群（四）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/23/Kafka%E6%B6%88%E6%81%AF%E7%B1%BB%E5%88%AB%EF%BC%88%E5%9B%9B%EF%BC%89/">Kafka消息类别（四）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/">Kafaka基本操作（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/">Kafaka安装（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">kafka入门（一）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Li<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
