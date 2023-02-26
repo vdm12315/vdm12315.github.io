@@ -174,9 +174,9 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
 
+<h2 id="5、关于分区消费组消费者细节"><a href="#5、关于分区消费组消费者细节" class="headerlink" title="5、关于分区消费组消费者细节"></a>5、关于分区消费组消费者细节</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% qnimg Kafka_cluster.jpg %&#125;</span><br></pre></td></tr></table></figure>
 
-
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% qnimg test.jpg %&#125;</span><br></pre></td></tr></table></figure>
+<p>途中Kafka集群有两个broker，每个broker中有多个partition。一个partition只能被一个消费组里的某一个消费者消费，从而保证消费顺序</p>
 
       
     </div>
