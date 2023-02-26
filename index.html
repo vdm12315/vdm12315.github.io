@@ -174,8 +174,8 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
 
-<h2 id="5、关于分区消费组消费者细节"><a href="#5、关于分区消费组消费者细节" class="headerlink" title="5、关于分区消费组消费者细节"></a>5、关于分区消费组消费者细节</h2><p><img src="/.io//blog\source_posts\Kafka集群（五）\Kafka_cluster.jpg"></p>
-<p><img src="/.io//blog\source_posts\Kafka集群（五）\Kafka_cluster.jpg" alt="Kafka_cluster.jpg"></p>
+<h2 id="5、关于分区消费组消费者细节"><a href="#5、关于分区消费组消费者细节" class="headerlink" title="5、关于分区消费组消费者细节"></a>5、关于分区消费组消费者细节</h2><p><img src="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E4%BA%94%EF%BC%89/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E4%BA%94%EF%BC%89%5CKafka_cluster.jpg"></p>
+<p><img src="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4%EF%BC%88%E4%BA%94%EF%BC%89/blog\source_posts\Kafka集群（五）\Kafka_cluster.jpg" alt="Kafka_cluster.jpg"></p>
 <p>图中Kafka集群有两个broker，每个broker中有多个partition。</p>
 <ul>
 <li><p>一个partition只能被一个消费组里的某一个消费者消费，从而保证消费顺序，Kafka只在partition的范围内保证消息消费的局部顺序性，但是多个partition的多个消费者消费的总的顺序性是得不到保证的。</p>
