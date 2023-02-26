@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vdm12315.github.io/2023/02/24/Kafka%E9%9B%86%E7%BE%A4(%E4%BA%94)/Kafka_cluster.jpg">
 <meta property="article:published_time" content="2023-02-24T13:59:23.000Z">
-<meta property="article:modified_time" content="2023-02-26T13:39:11.108Z">
+<meta property="article:modified_time" content="2023-02-26T13:41:35.749Z">
 <meta property="article:author" content="Li">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary">
@@ -177,13 +177,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意写上所有broker节点信息</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic mycluster</span><br></pre></td></tr></table></figure>
 
-<h2 id="5、关于分区消费组消费者细节"><a href="#5、关于分区消费组消费者细节" class="headerlink" title="5、关于分区消费组消费者细节"></a>5、关于分区消费组消费者细节</h2><div>
-![loading-ag-608](.\Kafka集群(五)\Kafka_cluster.jpg)
-</div>
-
-<img title="Kafka集群" src="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4(%E4%BA%94)/Kafka_cluster.jpg" alt="Kafka_cluster" data-align="inline">
-
-
+<h2 id="5、关于分区消费组消费者细节"><a href="#5、关于分区消费组消费者细节" class="headerlink" title="5、关于分区消费组消费者细节"></a>5、关于分区消费组消费者细节</h2><img title="Kafka集群" src="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4(%E4%BA%94)/Kafka_cluster.jpg" alt="Kafka_cluster" data-align="inline">
 
 <p>图中Kafka集群有两个broker，每个broker中有多个partition。</p>
 <ul>
