@@ -100,7 +100,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p><img src="/2023/02/26/test1/.%5Ctest1%5Cq.jpg" alt="Kafka_cluster.jpg"></p>
-<p><img src="/2023/02/26/test1\q.jpg" alt="q.jpg"></p>
+<p><img src="/2023/02/26/test1/q.jpg" alt="q.jpg"></p>
 
       
     </div>
