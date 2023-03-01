@@ -77,6 +77,116 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-MinIO客户端操作-三" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/" class="article-date">
+  <time class="dt-published" datetime="2023-03-01T12:41:23.000Z" itemprop="datePublished">2023-03-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/minio/">minio</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/" data-id="clepo34l60000gsvl9fojbs4c" data-title="MinIO客户端操作-三" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/minio/" rel="tag">minio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-MinIO安装-二" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/" class="article-date">
+  <time class="dt-published" datetime="2023-02-28T14:01:17.000Z" itemprop="datePublished">2023-02-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/minio/">minio</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/">MinIO安装-二</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、MinIOn环境搭建"><a href="#1、MinIOn环境搭建" class="headerlink" title="1、MinIOn环境搭建"></a>1、MinIOn环境搭建</h3><ul>
+<li>官网文档：<a target="_blank" rel="noopener" href="https://docs.min.io/docs">https://docs.min.io/docs</a></li>
+</ul>
+<h3 id="2、二进制安装-单机模式"><a href="#2、二进制安装-单机模式" class="headerlink" title="2、二进制安装(单机模式)"></a>2、二进制安装(单机模式)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.min.io/server/minio/release/linux-amd64/minio</span><br><span class="line">chmod +x minio</span><br><span class="line">MINIO_ROOT_USER=admin MINIO_ROOT_PASSWORD=password ./minio server /www/minio/data --console-address &quot;:9001&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">参考</span></span><br><span class="line">https://min.io/download#/linux</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>也可以使用 –config-dir指定配置文件目录，默认配置文件在用户主目录下的.minio</p>
+</li>
+<li><p>单机模式无EC纠删码，就是存储的原始文件</p>
+</li>
+</ul>
+<h3 id="3、docker方式安装（单机模式）"><a href="#3、docker方式安装（单机模式）" class="headerlink" title="3、docker方式安装（单机模式）"></a>3、docker方式安装（单机模式）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">普通docker运行方式</span></span><br><span class="line">docker run -p 9000:9000 -p 9001:9001 -v \</span><br><span class="line">/www/minio/data:/mnt/data \</span><br><span class="line">--name minio minio/minio server  \</span><br><span class="line">/mnt/data --console-address &quot;:9001&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">docker多盘运行方式</span></span><br><span class="line"> docker run -p 9000:9000 --name minio \</span><br><span class="line">-v /mnt/datal:/datal \</span><br><span class="line">-v /mnt/data2:/data2 \</span><br><span class="line">-v /mnt/data3:/data3 \</span><br><span class="line">-v /mnt/data4:/data4 \</span><br><span class="line">Iv /mnt/data5:/data5 \</span><br><span class="line">-v /mnt/data6:/data6 \</span><br><span class="line">-v /mnt/data7:/data7 \</span><br><span class="line">-v /mnt/data8:/data8  \</span><br><span class="line">minio/minio server /datal /data2 /data3 \</span><br><span class="line">/data4 /data5 /data6 /data7 /data8 \</span><br><span class="line">--console-address &quot;:9001&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、分布式部署"><a href="#4、分布式部署" class="headerlink" title="4、分布式部署"></a>4、分布式部署</h3><ul>
+<li><p>分布式MinIO需要保证每个节点的账户和密码一致</p>
+</li>
+<li><p>各节点的时间需要一致，建议使用ntp保证时间一致</p>
+</li>
+<li><p>各节点上的磁盘必须是干净无数据的</p>
+</li>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/" data-id="clepo34le0003gsvl4x6j5a08" data-title="MinIO安装-二" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/minio/" rel="tag">minio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Minio-一" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/02/27/Minio-%E4%B8%80/" class="article-date">
@@ -105,6 +215,32 @@
       
         <h2 id="1、MinIO"><a href="#1、MinIO" class="headerlink" title="1、MinIO"></a>1、MinIO</h2><ul>
 <li>MinIO是一款高性能、分布式、基于Apache License v2.0开源协议的对象存储服务。适合存储大容量非结构化数据，例如：视频、图片、日志文件、备份数据等。</li>
+</ul>
+<h2 id="2、MinIO基础概念"><a href="#2、MinIO基础概念" class="headerlink" title="2、MinIO基础概念"></a>2、MinIO基础概念</h2><ul>
+<li><p><strong>Object</strong>：存储到MinIO的基本对象，如：文本、视频等</p>
+</li>
+<li><p><strong>Bucket</strong>：用来存储Object的逻辑空间。每个Bucket之间的数据是相互隔离的。对于客户端而言，就相当于一个存放文件的顶层文件夹。</p>
+</li>
+<li><p><strong>Drive</strong>：即存储数据的磁盘，在MinIOn启动时，以参数的方式传入。MinIOn中所有的对象数据都存储在Drive中。</p>
+</li>
+<li><p><strong>Set</strong>：即一组Drive的集合，分布式部署根据集群规划会自动划分一个或多个Set，每个Set中的Drive分布在不同的位置。一个对象存储在一个Set上。</p>
+<ul>
+<li><p>一个对象存储在一个Set上</p>
+</li>
+<li><p>一个集群划分多个Set</p>
+</li>
+<li><p>一个Set包含的Drive数量是固定的，默认由系统根据集群规模自动计算得出</p>
+</li>
+<li><p>一个Set中的Drive尽可能分布在不同的节点上</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、纠删码EC（Erasure-Code）"><a href="#3、纠删码EC（Erasure-Code）" class="headerlink" title="3、纠删码EC（Erasure Code）"></a>3、纠删码EC（Erasure Code）</h2><ul>
+<li>纠删码是一种恢复丢失和损坏数据的数学算法，MinIO采用Reed-Solomon code将对象拆分成N&#x2F;2数据和N&#x2F;2奇偶校验块。这就意味着如果是12块盘，一个对象会被分成6个数据块、6个奇偶校验快，你可以丢失任意6块盘，仍可以从剩下的盘中将数据恢复。</li>
+</ul>
+<h2 id="4、MinIOn分布式"><a href="#4、MinIOn分布式" class="headerlink" title="4、MinIOn分布式"></a>4、MinIOn分布式</h2><ul>
+<li>一般在部署分布式MinIO的时候，要求盘符为4或4的倍数</li>
 </ul>
 
       
@@ -740,7 +876,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
     </div>
   </div>
 
@@ -753,6 +889,14 @@
       <ul>
         
           <li>
+            <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/">MinIO安装-二</a>
+          </li>
+        
+          <li>
             <a href="/2023/02/27/Minio-%E4%B8%80/">Minio-一</a>
           </li>
         
@@ -762,14 +906,6 @@
         
           <li>
             <a href="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4(%E4%BA%94)/">Kafka集群（四）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/23/Kafka%E6%B6%88%E6%81%AF%E7%B1%BB%E5%88%AB%EF%BC%88%E5%9B%9B%EF%BC%89/">Kafka消息类别（四）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/">Kafaka基本操作（三）</a>
           </li>
         
       </ul>
