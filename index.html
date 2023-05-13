@@ -77,6 +77,149 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-redis集群（一）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-05-13T04:01:33.000Z" itemprop="datePublished">2023-05-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/">redis集群（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="clhlgqept0001gkvl1sa017dd" data-title="redis集群（一）" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Nacos什么是Nacos一" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/" class="article-date">
+  <time class="dt-published" datetime="2023-03-16T10:50:40.000Z" itemprop="datePublished">2023-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Nacos/">Nacos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/">Nacos什么是Nacos一</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1、什么是Nacos"><a href="#1、什么是Nacos" class="headerlink" title="1、什么是Nacos"></a>1、什么是Nacos</h2><p>一个更易于构建云原生应用的动态服务发现、服务配置和服务管理平台。</p>
+<h3 id="2、注册中心"><a href="#2、注册中心" class="headerlink" title="2、注册中心"></a>2、注册中心</h3><ul>
+<li><p>上游服务向注册中心注册地址，供下游服务调用。在服务众多的微服务场景中，频繁的服务创建和销毁会导致上游服务发现不了下游服务，注册中心就是解决这个问题的。</p>
+</li>
+<li><p>注册中心会和服务维护一个心跳信息，当一定时间内没有收到心跳信息，那么在注册中心中把该服务标致为down</p>
+</li>
+</ul>
+<h3 id="3、nacos-api创建账号"><a href="#3、nacos-api创建账号" class="headerlink" title="3、nacos api创建账号"></a>3、nacos api创建账号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -d &#x27;username=test&amp;password=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以新增用户</span><br><span class="line"></span><br><span class="line">curl -XPUT -d &#x27;username=test&amp;newPassword=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以修改用户密码</span><br><span class="line"></span><br><span class="line">curl -XDELETE -d &#x27;username=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以删除用户</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">如果开启了权限则按照如下执行</span></span><br><span class="line"> curl -X POST &#x27;127.0.0.1:8848/nacos/v1/auth/login&#x27; -d &#x27;username=nacos&amp;password=nacos&#x27;</span><br><span class="line"></span><br><span class="line">&#123;&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3ODk5NjE1NX0.gypi2TjcwvKj3Hyux6LfAZ1EYiz4x-SVq0XTKWmCoNQ&quot;,&quot;tokenTtl&quot;:18000,&quot;globalAdmin&quot;:true,&quot;username&quot;:&quot;nacos&quot;&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">获取accessToken，带上Token访问</span></span><br><span class="line"></span><br><span class="line">curl -XPOST -d &#x27;username=test&amp;password=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3ODk5NjE1NX0.gypi2TjcwvKj3Hyux6LfAZ1EYiz4x-SVq0XTKWmCoNQ&#x27; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改密码</span></span><br><span class="line">curl -XPUT -d &#x27;username=nacos&amp;newPassword=nacos1&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3OTAzMTk2Nn0.TyPoR6qh8lvaFPIdHhFeN4jhqreRguDgeJFRNSxPhJA&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、docker-compose-单机模式"><a href="#4、docker-compose-单机模式" class="headerlink" title="4、docker compose 单机模式"></a>4、docker compose 单机模式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">services:</span><br><span class="line">  nacos:</span><br><span class="line">    image: nacos/nacos-server:$&#123;NACOS_VERSION&#125;</span><br><span class="line">    container_name: nacos-standalone</span><br><span class="line">    environment:</span><br><span class="line">      - PREFER_HOST_MODE=hostname</span><br><span class="line">      - MODE=standalone</span><br><span class="line">    volumes:</span><br><span class="line">      - ./standalone-logs/:/home/nacos/logs</span><br><span class="line">      - ./init.d/standone.properties:/home/nacos/conf/application.properties</span><br><span class="line">         # 单机模式Nacos的数据文件储存/home/nacos/data/date-derby中</span><br><span class="line">      - ./data/:/home/nacos/data/</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8848:8848&quot;</span><br><span class="line">      - &quot;9848:9848&quot;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/" data-id="clhlgqeq0000agkvlfk3pdr05" data-title="Nacos什么是Nacos一" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-systemd-一" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/03/13/systemd-%E4%B8%80/" class="article-date">
+  <time class="dt-published" datetime="2023-03-13T14:58:02.000Z" itemprop="datePublished">2023-03-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/systemd/">systemd</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/03/13/systemd-%E4%B8%80/">systemd(一)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p> 2011年5月，Fedora率先采用system取代SysVinit，2019年2月，systemd成为绝大多数Linux发行版的选择，systemd-nspawn也能管理容器</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/03/13/systemd-%E4%B8%80/" data-id="clhlgqepr0000gkvlg1wyfgni" data-title="systemd(一)" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/systemd/" rel="tag">systemd</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-MinIO客户端操作-三" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/" class="article-date">
@@ -103,7 +246,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1、部署客户端"><a href="#1、部署客户端" class="headerlink" title="1、部署客户端"></a>1、部署客户端</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载包</span></span><br><span class="line">curl https://dl.min.io/client/mc/release/linux-arm64/mc \</span><br><span class="line">  --create-dirs \</span><br><span class="line">  -o /usr/local/sbin/mc</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">给予可执行权限</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
@@ -610,234 +754,12 @@
 
 
   
-    <article id="post-Kafaka安装（二）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-02-22T12:52:33.000Z" itemprop="datePublished">2023-02-22</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/kafka/">kafka</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/">Kafaka安装（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="1、Kafka下载"><a href="#1、Kafka下载" class="headerlink" title="1、Kafka下载"></a>1、Kafka下载</h2><p>Kafka<a target="_blank" rel="noopener" href="https://downloads.apache.org/kafka/3.4.0/kafka_2.13-3.4.0.tgz">Kafka下载</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka本版介绍，</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2.13 指的是编译Kafka源代码的Scala编译器版本号，</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3.4.0是Kafka版本，其中3是大版本，4是小版本，0表示修订版本</span></span><br><span class="line">kafka_2.13-3.4.0.tgz</span><br></pre></td></tr></table></figure>
-
-<p><em>Kafka安装依赖java环境，所以先配置java环境</em></p>
-<h2 id="2、Kafka安装"><a href="#2、Kafka安装" class="headerlink" title="2、Kafka安装"></a>2、Kafka安装</h2><ol>
-<li><p>下载安装包</p>
-</li>
-<li><p>解压安装包到对应的目录</p>
-</li>
-</ol>
-<h2 id="3、Kafka文件配置文件"><a href="#3、Kafka文件配置文件" class="headerlink" title="3、Kafka文件配置文件"></a>3、Kafka文件配置文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">单运行时配置0即可，集群配置，每个broker.id参数值唯一</span></span><br><span class="line">broker.id=0 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka监听地址</span></span><br><span class="line">listeners=PLAINTEXT:/10.111.174.12:9092 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息保存在该日志文件路径，消息默认保存7天,正式环境不要使用tmp目录</span></span><br><span class="line">log.dirs=/tmp/kafka-logs </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka链接zookeeper地址</span></span><br><span class="line">zookeeper.connect=localhost:2181 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">每个日志文件的保存时间，默认数据保存时间对所有topic都一样</span></span><br><span class="line">log.retention.hours=168</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认创建topic的分区数</span></span><br><span class="line">num.partitions=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动创建topic的默认副本数量，建议设置为大于等于2</span></span><br><span class="line">default.replication.factor=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">当producer设置acks为-1时，min.insync.replicas指定replicas的最小数目</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">（必须确认每一个replica的写数据都是成功的），如果整个数目没有达到，producer</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送消息会产生异常</span></span><br><span class="line">min.insync.replicas=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否允许删除主题</span></span><br><span class="line">delete.topic.enable=false</span><br></pre></td></tr></table></figure>
-
-<h2 id="4、启动Kafka"><a href="#4、启动Kafka" class="headerlink" title="4、启动Kafka"></a>4、启动Kafka</h2><p><em>以下操作基于Kafka解压目录</em></p>
-<ul>
-<li><p>启动</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka基于zookeeper，所以需要先启动zookeeper</span></span><br><span class="line">./bin/zookeeper-server-start.sh -daemon ./config/zookeeper.properties </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-daemon代表运行在后台</span></span><br><span class="line">./bin/kafka-server-start.sh -daemon ./config/server.properties </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>登录zookeeper查看信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">登录zookeeper</span></span><br><span class="line">./bin/zookeeper-shell.sh localhost:2181 </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看broker，显示0表示<span class="built_in">id</span>为0的broker已经上线</span></span><br><span class="line">ls /brokers/ids </span><br><span class="line">[0]</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://vdm12315.github.io/2023/02/22/Kafaka%E5%AE%89%E8%A3%85%EF%BC%88%E4%BA%8C%EF%BC%89/" data-id="clefsbavq0006ykvlgf5gf546" data-title="Kafaka安装（二）" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-kafka入门（一）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-02-20T13:42:06.000Z" itemprop="datePublished">2023-02-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/kafka/">kafka</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">kafka入门（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="1、什么是消息队列"><a href="#1、什么是消息队列" class="headerlink" title="1、什么是消息队列"></a>1、什么是消息队列</h2><p><em>消息队列本质上是解决异步通信问题</em></p>
-<h2 id="2、为什么要使用消息队列-异步解耦"><a href="#2、为什么要使用消息队列-异步解耦" class="headerlink" title="2、为什么要使用消息队列-异步解耦"></a>2、为什么要使用消息队列-异步解耦</h2><p>拿电商下单举例：用户下单-&gt;数据库创建订单记录-&gt;商品库存扣除记录-&gt;给用户积分-&gt;给用户发送优惠券-&gt;订单创建成功。如果是同步的流程一是耗时长，二是任何一个环节阻塞都会导致整个流程时间更长</p>
-<p>使用MQ：用户下单-&gt;MQ-&gt;数据库创建订单记录、商品库存扣除记录、给用户积分、给用户发送优惠券。等流程全通过微服务监听MQ消息，每个服务收到用户下单的消息后分别同时执行各自的动作，各个微服务之间通过MQ的事务特性保证最终一致性。</p>
-<h2 id="3、常用MQ种类："><a href="#3、常用MQ种类：" class="headerlink" title="3、常用MQ种类："></a>3、常用MQ种类：</h2><ul>
-<li><p>Rabbit MQ：使用简单</p>
-</li>
-<li><p>Rocket MQ：阿里开源，类kafka，性能与Kafka比肩，功能上更丰富，如：顺序消息</p>
-</li>
-<li><p>Kafka：性能最快</p>
-</li>
-<li><p>Zero MQ</p>
-</li>
-</ul>
-<h5 id="有broker"><a href="#有broker" class="headerlink" title="有broker"></a>有broker</h5><ul>
-<li><p>重topic：Kafka、Rocket MQ、Active MQ</p>
-<p>整个broker依据topic来进行消息的中转，在重topic的消息队列里必然需要topic的存在</p>
-</li>
-<li><p>轻topic：Rabbit MQ</p>
-<p>topic只是一种中转模式</p>
-</li>
-</ul>
-<h6 id="无broker：在生产者和消费者之间没有broker，直接使用Socket通信"><a href="#无broker：在生产者和消费者之间没有broker，直接使用Socket通信" class="headerlink" title="无broker：在生产者和消费者之间没有broker，直接使用Socket通信"></a>无broker：在生产者和消费者之间没有broker，直接使用Socket通信</h6><ul>
-<li>Zero MQ</li>
-</ul>
-<h2 id="4、什么是-Apache-Kafka"><a href="#4、什么是-Apache-Kafka" class="headerlink" title="4、什么是 Apache Kafka"></a>4、什么是 Apache Kafka</h2><p>Apache Kafka最早是有Linkedin公司开发，一款基于zookeeper协调的开源的分布式流处理平台，因其具备高吞吐、可扩展、持久存储、高可用等特性，被广泛用于日志收集监控数据聚合、流式数据处理、在线分析和离线分析等大数据领域，已成为大数据生态中不可或缺的部分。</p>
-<p>kafka具有如下特征：</p>
-<ul>
-<li><p>消息队列，Kafka具有应用解耦、流量削峰填谷、缓冲、异步通信等消息队列功能。</p>
-</li>
-<li><p>分布式存储系统，Kafka可以把消息持久化，同时用多副本来实现故障转移，可以作为数据存储系统来使用。</p>
-</li>
-<li><p>实时数据处理，Kafka提供了一些和数据处理相关的组件，比如Kafka Streams、Kafka Connect，具备了实时数据的处理功能。</p>
-</li>
-</ul>
-<h2 id="5、Kafka基本概念"><a href="#5、Kafka基本概念" class="headerlink" title="5、Kafka基本概念"></a>5、Kafka基本概念</h2><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Broker</td>
-<td>消息中间件处理节点，一个Kafaka节点就是一个Broker，一个或多个Broker可以组成一个Kafka集群</td>
-</tr>
-<tr>
-<td>Topic</td>
-<td>Kafka根据topic对消息进行分类，发布到Kafka集群的每条消息都需要指定一个topic</td>
-</tr>
-<tr>
-<td>Producer</td>
-<td>消息生产者，向Broker发送消息的客户端，通常表现为一个应用或代码块</td>
-</tr>
-<tr>
-<td>Consumer</td>
-<td>消息消费者，从Broker读取消息的客户端，通常表现为一个应用或代码块</td>
-</tr>
-<tr>
-<td>ConsumerGroup</td>
-<td>每个Consumer属于一个特定的Consumer Group，一条消息可以被多个不同的Comsumer Group消费，但是一个Consumer Group中只能有一个Consumer能够消费该消息</td>
-</tr>
-<tr>
-<td>Partition</td>
-<td>物理上的概念，一个topic有分为多个partition，每个partition内部消息是有序的</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://vdm12315.github.io/2023/02/20/kafka%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="clefsbavq0007ykvlhabdghud" data-title="kafka入门（一）" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-kafka" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/19/kafka/" class="article-date">
-  <time class="dt-published" datetime="2023-02-19T12:02:45.000Z" itemprop="datePublished">2023-02-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/kafka/">kafka</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/19/kafka/">kafka</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>一、忘记密码修复方式<br>如果对上述设置授权后，忘记密码了，怎么办？方法如下：</p>
-<p>进入配置文件zoo.cfg，修改配置，设置跳过Acl验证，配置如下：</p>
-<p>skipACL&#x3D;yes<br>重启zookeeper。</p>
-<p>1、addauth digest user1:123456 #先执行这个，下面那个才会生效，有密码时候，需要先输入addauth digest user1:123456命令认证后才能操作<br>2、setAcl &#x2F;  auth:user1:123456:crwad<br>3、setAcl &#x2F; world:anyone:crwad</p>
-<p>4、ls -s命令<br>[zk: 127.0.0.1:2181(CONNECTED) 22] ls -s &#x2F;<br>[a, b, c, zookeeper]<br>cZxid &#x3D; 0x0 #创建节点的事务ID<br>ctime &#x3D; Wed Dec 31 19:00:00 EST 1969 #创建节点的时间，毫秒值<br>mZxid &#x3D; 0x0 #最后更新的事务ID<br>mtime &#x3D; Wed Dec 31 19:00:00 EST 1969 #最后修改的时间，毫秒值<br>pZxid &#x3D; 0x41 #最后更新的子节点ID<br>cversion &#x3D; 6 #子节点变化号，子节点修改次数<br>dataVersion &#x3D; 0 #znode数据变化号<br>aclVersion &#x3D; 5 #权限控制版本<br>ephemeralOwner &#x3D; 0x0<br>dataLength &#x3D; 0<br>numChildren &#x3D; 4 #子节点数量<br>5、节点类型<br>    1、持久<br>    2、短暂（临时）<br>    3、有序号<br>    4、无序号<br>    create &#x2F;sanguo “lvbu”  #创建无序号永久节点<br>    get -s &#x2F;sanguo<br>    create -s &#x2F;sanguo #创建有序号永久节点</p>
-<p>######kafka<br>启动zookeeper<br>sh zookeeper-server-start.sh  ..&#x2F;config&#x2F;zookeeper.properties<br>启动kafka<br>sh kafka-server-start.sh ..&#x2F;config&#x2F;server.properties   #后台启动kafka sh kafka-server-start.sh –daemon ..&#x2F;config&#x2F;server.properties<br>创建topic<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –create –topic test<br>查看topic<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –list<br>查看分区状态，分区和副本数量<br>.&#x2F;kafka-topics.sh –bootstrap-server localhost:9092 –describe –topic test</p>
-<p>#生产者，发送消息<br>.&#x2F;kafka-console-producer.sh –bootstrap-server localhost:9092 –topic test</p>
-<p>#消费者，接收消息.#–from-beginning 从最早开始获取消息<br>.&#x2F;kafka-console-consumer.sh –bootstrap-server localhost:9092 –topic test –from-beginning</p>
-<p>#链接到zookeeper<br>.&#x2F;bin&#x2F;zookeeper-shell.sh 127.0.0.1:2181</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://vdm12315.github.io/2023/02/19/kafka/" data-id="clefsbavr0009ykvl3hgrh3gi" data-title="kafka" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+  </nav>
 
 </section>
         
@@ -847,7 +769,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/minio/">minio</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Nacos/">Nacos</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/minio/">minio</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/systemd/">systemd</a></li></ul>
     </div>
   </div>
 
@@ -857,7 +779,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minio/" rel="tag">minio</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minio/" rel="tag">minio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemd/" rel="tag">systemd</a></li></ul>
     </div>
   </div>
 
@@ -867,7 +789,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/kafka/" style="font-size: 20px;">kafka</a> <a href="/tags/minio/" style="font-size: 10px;">minio</a>
+      <a href="/tags/Nacos/" style="font-size: 10px;">Nacos</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/kafka/" style="font-size: 20px;">kafka</a> <a href="/tags/minio/" style="font-size: 15px;">minio</a> <a href="/tags/systemd/" style="font-size: 10px;">systemd</a>
     </div>
   </div>
 
@@ -876,7 +798,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
     </div>
   </div>
 
@@ -889,23 +811,23 @@
       <ul>
         
           <li>
+            <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/">redis集群（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/">Nacos什么是Nacos一</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/13/systemd-%E4%B8%80/">systemd(一)</a>
+          </li>
+        
+          <li>
             <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
           </li>
         
           <li>
             <a href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/">MinIO安装-二</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/27/Minio-%E4%B8%80/">Minio-一</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/27/Kafka%E7%94%9F%E4%BA%A7%E8%80%85-%E5%85%AD/">Kafka生产者(六)</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/24/Kafka%E9%9B%86%E7%BE%A4(%E4%BA%94)/">Kafka集群（四）</a>
           </li>
         
       </ul>

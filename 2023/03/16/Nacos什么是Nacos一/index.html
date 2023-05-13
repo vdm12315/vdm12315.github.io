@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Nacos什么是Nacos一 | 微醺</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1、什么是Nacos一个更易于构建云原生应用的动态服务发现、服务配置和服务管理平台。 2、注册中心 上游服务向注册中心注册地址，供下游服务调用。在服务众多的微服务场景中，频繁的服务创建和销毁会导致上游服务发现不了下游服务，注册中心就是解决这个问题的。  注册中心会和服务维护一个心跳信息，当一定时间内没有收到心跳信息，那么在注册中心中把该服务标致为down   3、nacos api创建账号1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nacos什么是Nacos一">
+<meta property="og:url" content="https://vdm12315.github.io/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/index.html">
+<meta property="og:site_name" content="微醺">
+<meta property="og:description" content="1、什么是Nacos一个更易于构建云原生应用的动态服务发现、服务配置和服务管理平台。 2、注册中心 上游服务向注册中心注册地址，供下游服务调用。在服务众多的微服务场景中，频繁的服务创建和销毁会导致上游服务发现不了下游服务，注册中心就是解决这个问题的。  注册中心会和服务维护一个心跳信息，当一定时间内没有收到心跳信息，那么在注册中心中把该服务标致为down   3、nacos api创建账号1234">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-16T10:50:40.000Z">
+<meta property="article:modified_time" content="2023-03-17T00:56:10.619Z">
+<meta property="article:author" content="Li">
+<meta property="article:tag" content="Nacos">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="微醺" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">微醺</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">保持学习，不要掉队</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vdm12315.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Nacos什么是Nacos一" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/" class="article-date">
+  <time class="dt-published" datetime="2023-03-16T10:50:40.000Z" itemprop="datePublished">2023-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Nacos/">Nacos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Nacos什么是Nacos一
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1、什么是Nacos"><a href="#1、什么是Nacos" class="headerlink" title="1、什么是Nacos"></a>1、什么是Nacos</h2><p>一个更易于构建云原生应用的动态服务发现、服务配置和服务管理平台。</p>
+<h3 id="2、注册中心"><a href="#2、注册中心" class="headerlink" title="2、注册中心"></a>2、注册中心</h3><ul>
+<li><p>上游服务向注册中心注册地址，供下游服务调用。在服务众多的微服务场景中，频繁的服务创建和销毁会导致上游服务发现不了下游服务，注册中心就是解决这个问题的。</p>
+</li>
+<li><p>注册中心会和服务维护一个心跳信息，当一定时间内没有收到心跳信息，那么在注册中心中把该服务标致为down</p>
+</li>
+</ul>
+<h3 id="3、nacos-api创建账号"><a href="#3、nacos-api创建账号" class="headerlink" title="3、nacos api创建账号"></a>3、nacos api创建账号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -d &#x27;username=test&amp;password=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以新增用户</span><br><span class="line"></span><br><span class="line">curl -XPUT -d &#x27;username=test&amp;newPassword=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以修改用户密码</span><br><span class="line"></span><br><span class="line">curl -XDELETE -d &#x27;username=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users&#x27;  可以删除用户</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">如果开启了权限则按照如下执行</span></span><br><span class="line"> curl -X POST &#x27;127.0.0.1:8848/nacos/v1/auth/login&#x27; -d &#x27;username=nacos&amp;password=nacos&#x27;</span><br><span class="line"></span><br><span class="line">&#123;&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3ODk5NjE1NX0.gypi2TjcwvKj3Hyux6LfAZ1EYiz4x-SVq0XTKWmCoNQ&quot;,&quot;tokenTtl&quot;:18000,&quot;globalAdmin&quot;:true,&quot;username&quot;:&quot;nacos&quot;&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">获取accessToken，带上Token访问</span></span><br><span class="line"></span><br><span class="line">curl -XPOST -d &#x27;username=test&amp;password=test&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3ODk5NjE1NX0.gypi2TjcwvKj3Hyux6LfAZ1EYiz4x-SVq0XTKWmCoNQ&#x27; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改密码</span></span><br><span class="line">curl -XPUT -d &#x27;username=nacos&amp;newPassword=nacos1&#x27; &#x27;http://127.0.0.1:8848/nacos/v1/auth/users?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTY3OTAzMTk2Nn0.TyPoR6qh8lvaFPIdHhFeN4jhqreRguDgeJFRNSxPhJA&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、docker-compose-单机模式"><a href="#4、docker-compose-单机模式" class="headerlink" title="4、docker compose 单机模式"></a>4、docker compose 单机模式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">services:</span><br><span class="line">  nacos:</span><br><span class="line">    image: nacos/nacos-server:$&#123;NACOS_VERSION&#125;</span><br><span class="line">    container_name: nacos-standalone</span><br><span class="line">    environment:</span><br><span class="line">      - PREFER_HOST_MODE=hostname</span><br><span class="line">      - MODE=standalone</span><br><span class="line">    volumes:</span><br><span class="line">      - ./standalone-logs/:/home/nacos/logs</span><br><span class="line">      - ./init.d/standone.properties:/home/nacos/conf/application.properties</span><br><span class="line">         # 单机模式Nacos的数据文件储存/home/nacos/data/date-derby中</span><br><span class="line">      - ./data/:/home/nacos/data/</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8848:8848&quot;</span><br><span class="line">      - &quot;9848:9848&quot;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/" data-id="clhlgqeq0000agkvlfk3pdr05" data-title="Nacos什么是Nacos一" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          redis集群（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/03/13/systemd-%E4%B8%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">systemd(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Nacos/">Nacos</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/minio/">minio</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/systemd/">systemd</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minio/" rel="tag">minio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemd/" rel="tag">systemd</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Nacos/" style="font-size: 10px;">Nacos</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/kafka/" style="font-size: 20px;">kafka</a> <a href="/tags/minio/" style="font-size: 15px;">minio</a> <a href="/tags/systemd/" style="font-size: 10px;">systemd</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/">redis集群（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/">Nacos什么是Nacos一</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/13/systemd-%E4%B8%80/">systemd(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/">MinIO安装-二</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Li<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
