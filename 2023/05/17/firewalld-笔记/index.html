@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>firewalld 笔记 | 微醺</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1、firewalld规则 firewalld默认的规则是拒绝，iptable默认规则是放行。  firewalld加入了zone的概念  一个zone区域仅能绑定一个网卡，设定不同的匹配规则  一个zone区域又可针对不同的源地址设定不同的规则  默认定义模板配置文件：&#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;  默认配置文件：&#x2F;etc&#x2F;f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="firewalld 笔记">
+<meta property="og:url" content="https://vdm12315.github.io/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="微醺">
+<meta property="og:description" content="1、firewalld规则 firewalld默认的规则是拒绝，iptable默认规则是放行。  firewalld加入了zone的概念  一个zone区域仅能绑定一个网卡，设定不同的匹配规则  一个zone区域又可针对不同的源地址设定不同的规则  默认定义模板配置文件：&#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;  默认配置文件：&#x2F;etc&#x2F;f">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-17T08:16:06.000Z">
+<meta property="article:modified_time" content="2023-05-20T12:25:26.567Z">
+<meta property="article:author" content="Li">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="微醺" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">微醺</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">保持学习，不要掉队</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vdm12315.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-firewalld-笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-05-17T08:16:06.000Z" itemprop="datePublished">2023-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      firewalld 笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="1、firewalld规则"><a href="#1、firewalld规则" class="headerlink" title="1、firewalld规则"></a>1、firewalld规则</h4><ul>
+<li><p>firewalld默认的规则是拒绝，iptable默认规则是放行。</p>
+</li>
+<li><p>firewalld加入了zone的概念</p>
+</li>
+<li><p>一个zone区域仅能绑定一个网卡，设定不同的匹配规则</p>
+</li>
+<li><p>一个zone区域又可针对不同的源地址设定不同的规则</p>
+</li>
+<li><p>默认定义模板配置文件：&#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;</p>
+</li>
+<li><p>默认配置文件：&#x2F;etc&#x2F;firewalld&#x2F;</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trusted（信任）</td>
+<td>允许所有的数据包流入流出</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>同home</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+</tbody></table>
+<h4 id="防火墙规则两种状态"><a href="#防火墙规则两种状态" class="headerlink" title="防火墙规则两种状态"></a>防火墙规则两种状态</h4><ul>
+<li><p>runtime：修改规则马上生效，但是临时生效，重启失效</p>
+</li>
+<li><p>permanent：修改后需要reload才生效，但是永久生效</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-default-zone</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line">firewall-cmd --set-default-zone=trusted</span><br><span class="line">firewall-cmd --set-default-zone=public</span><br><span class="line">firewall-cmd --get-active-zone</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line">firewall-cmd --get-services</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public (active)</span><br><span class="line">  target: default #default规则为拒绝</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: eth0 #相关网卡</span><br><span class="line">  sources:  # 源IP，所有IP</span><br><span class="line">  services: dhcpv6-client ssh #放行服务</span><br><span class="line">  ports: 8848/tcp #放行端口</span><br><span class="line">  protocols:  #协议</span><br><span class="line">  masquerade: no #伪造</span><br><span class="line">  forward-ports:  #转发</span><br><span class="line">  source-ports:  #源端口</span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules:  #富规则</span><br><span class="line">    rule family=&quot;ipv4&quot; source address=&quot;0.0.0.0/0&quot; port port=&quot;8080&quot; protocol=&quot;tcp&quot; reject</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将放行的IP加入trusted中</span></span><br><span class="line">firewall-cmd --add-source=10.1.1.1/24 --zone=trusted --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/" data-id="cli0ekjwm0000wkvl2zssgbkq" data-title="firewalld 笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">redis集群（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Nacos/">Nacos</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/minio/">minio</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/systemd/">systemd</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nacos/" rel="tag">Nacos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/minio/" rel="tag">minio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/systemd/" rel="tag">systemd</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Nacos/" style="font-size: 10px;">Nacos</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/kafka/" style="font-size: 20px;">kafka</a> <a href="/tags/minio/" style="font-size: 15px;">minio</a> <a href="/tags/systemd/" style="font-size: 10px;">systemd</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/">firewalld 笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/">redis集群（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/16/Nacos%E4%BB%80%E4%B9%88%E6%98%AFNacos%E4%B8%80/">Nacos什么是Nacos一</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/13/systemd-%E4%B8%80/">systemd(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Li<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

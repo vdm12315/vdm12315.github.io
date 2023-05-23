@@ -77,6 +77,113 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-firewalld-笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-05-17T08:16:06.000Z" itemprop="datePublished">2023-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/">firewalld 笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="1、firewalld规则"><a href="#1、firewalld规则" class="headerlink" title="1、firewalld规则"></a>1、firewalld规则</h4><ul>
+<li><p>firewalld默认的规则是拒绝，iptable默认规则是放行。</p>
+</li>
+<li><p>firewalld加入了zone的概念</p>
+</li>
+<li><p>一个zone区域仅能绑定一个网卡，设定不同的匹配规则</p>
+</li>
+<li><p>一个zone区域又可针对不同的源地址设定不同的规则</p>
+</li>
+<li><p>默认定义模板配置文件：&#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;</p>
+</li>
+<li><p>默认配置文件：&#x2F;etc&#x2F;firewalld&#x2F;</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trusted（信任）</td>
+<td>允许所有的数据包流入流出</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>同home</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝流入的流量，除非与流出的流量相关，默认放行ssh、dhcpv6-client</td>
+</tr>
+</tbody></table>
+<h4 id="防火墙规则两种状态"><a href="#防火墙规则两种状态" class="headerlink" title="防火墙规则两种状态"></a>防火墙规则两种状态</h4><ul>
+<li><p>runtime：修改规则马上生效，但是临时生效，重启失效</p>
+</li>
+<li><p>permanent：修改后需要reload才生效，但是永久生效</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-default-zone</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line">firewall-cmd --set-default-zone=trusted</span><br><span class="line">firewall-cmd --set-default-zone=public</span><br><span class="line">firewall-cmd --get-active-zone</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line">firewall-cmd --get-services</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public (active)</span><br><span class="line">  target: default #default规则为拒绝</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: eth0 #相关网卡</span><br><span class="line">  sources:  # 源IP，所有IP</span><br><span class="line">  services: dhcpv6-client ssh #放行服务</span><br><span class="line">  ports: 8848/tcp #放行端口</span><br><span class="line">  protocols:  #协议</span><br><span class="line">  masquerade: no #伪造</span><br><span class="line">  forward-ports:  #转发</span><br><span class="line">  source-ports:  #源端口</span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules:  #富规则</span><br><span class="line">    rule family=&quot;ipv4&quot; source address=&quot;0.0.0.0/0&quot; port port=&quot;8080&quot; protocol=&quot;tcp&quot; reject</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将放行的IP加入trusted中</span></span><br><span class="line">firewall-cmd --add-source=10.1.1.1/24 --zone=trusted --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vdm12315.github.io/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/" data-id="cli0ekjwm0000wkvl2zssgbkq" data-title="firewalld 笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-redis集群（一）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
@@ -703,72 +810,6 @@
 
 
   
-    <article id="post-Kafaka基本操作（三）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-02-22T13:39:43.000Z" itemprop="datePublished">2023-02-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/kafka/">kafka</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/">Kafaka基本操作（三）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="1、创建topic"><a href="#1、创建topic" class="headerlink" title="1、创建topic"></a>1、创建topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建名为<span class="built_in">test</span>的topic，这个topic只有一个partition和一个副本</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 1 --topic test</span><br></pre></td></tr></table></figure>
-
-<h2 id="2、查看topic"><a href="#2、查看topic" class="headerlink" title="2、查看topic"></a>2、查看topic</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有的topic信息</span></span><br><span class="line">./bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</span><br></pre></td></tr></table></figure>
-
-<h2 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h2><p>Kafka自带了一个producer命令客户端，可以从本地文件中读取内容，也可以直接以命令行的方式输入内容，并将这些内容以消息的形式发送到Kafka集群中。默认情况下，每一行会被当成一个独立的消息。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把消息发送给broker中的<span class="built_in">test</span> topic，分别发送abcdefg消息</span></span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">a</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">b</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">c</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">d</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">e</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">f</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">g</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4、消费消息"><a href="#4、消费消息" class="headerlink" title="4、消费消息"></a>4、消费消息</h2><p>对于consumer，kafka同样也自带了一个命令行客户端，会将获取到的内容在命令中进行输出，默认是消费最新消息。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从Kafka服务器中指定的topic进行消费</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从最后一条消息的偏移量+1开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从头开始消费</span></span><br><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test</span><br></pre></td></tr></table></figure>
-
-<p>几个注意点：</p>
-<ul>
-<li><p>消息会被存储的</p>
-</li>
-<li><p>消息是顺序存储的</p>
-</li>
-<li><p>消息是有偏移量的</p>
-</li>
-<li><p>消费时可以指明偏移量进行消费</p>
-</li>
-</ul>
-<h2 id="5、Kafka生产的日志文件说明"><a href="#5、Kafka生产的日志文件说明" class="headerlink" title="5、Kafka生产的日志文件说明"></a>5、Kafka生产的日志文件说明</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在server.properties配置文件中以log.dirs配置为起始目录位置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入到topic名字+分区的目录下，如本次创建的topic为<span class="built_in">test</span>，则进入到test-0目录</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">索引文件</span></span><br><span class="line">00000000000000000000.index</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Kafka消息体文件，Kafka消息都保存在这个文件中</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">producer发送的消息保存在该文件，consumer从该文件消费消息</span></span><br><span class="line">00000000000000000000.log</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">时间索引文件</span></span><br><span class="line">00000000000000000000.timeindex</span><br><span class="line">leader-epoch-checkpoint</span><br><span class="line">partition.metadata</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://vdm12315.github.io/2023/02/22/Kafaka%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%89%EF%BC%89/" data-id="clefsbavh0000ykvldmb67ggt" data-title="Kafaka基本操作（三）" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -826,6 +867,10 @@
       <ul>
         
           <li>
+            <a href="/2023/05/17/firewalld-%E7%AC%94%E8%AE%B0/">firewalld 笔记</a>
+          </li>
+        
+          <li>
             <a href="/2023/05/13/redis%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/">redis集群（一）</a>
           </li>
         
@@ -839,10 +884,6 @@
         
           <li>
             <a href="/2023/03/01/MinIO%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C-%E4%B8%89/">MinIO客户端操作-三</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/28/MinIO%E5%AE%89%E8%A3%85-%E4%BA%8C/">MinIO安装-二</a>
           </li>
         
       </ul>
